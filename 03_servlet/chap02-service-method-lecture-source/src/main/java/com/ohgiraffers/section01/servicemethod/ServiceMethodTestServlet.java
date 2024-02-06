@@ -24,7 +24,7 @@ public class ServiceMethodTestServlet extends HttpServlet {
         // 어떤 방식으로 request가 넘어오는지 알 수 있음
         String httpMethod = httpRequest.getMethod();
         System.out.println("요청 방식: " + httpMethod);
-        // 요청 방식: GET 이 출력됨
+        // 요청 방식: GET,POST 이 출력됨
 
         if ("GET".equals(httpMethod)) {
             doGet(httpRequest, httpResponse);
