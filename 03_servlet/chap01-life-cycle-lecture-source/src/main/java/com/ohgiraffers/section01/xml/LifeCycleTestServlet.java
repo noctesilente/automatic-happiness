@@ -19,7 +19,7 @@ public class LifeCycleTestServlet extends HttpServlet {
     /* 설명. servlet의 요청이 최초인 경우 servlet 객체를 생성하고 자동으로 호출하게 되는 메소드 */
     @Override
     public void init(ServletConfig config) throws ServletException {
-        System.out.println("xml 매핑 init() 메소드 호출!");
+        System.out.println("xml 매핑 i                    nit() 메소드 호출!");
     }
 
     /* 설명. 컨테이너가 종료될 때 호출하는 메소드이며 주로 자원을 반납하는 용도로 사용된다. */
