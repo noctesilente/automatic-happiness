@@ -1,0 +1,23 @@
+package com.ohgiraffers.section01.othersite;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+
+@WebServlet("/othersite")
+public class OtherSiteRedirectServlet extends HttpServlet {
+    public OtherSiteRedirectServlet() {
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("get 요청을 받으면 naver 사이트로 redirect");
+        // 갈 곳을 정해주면 웹 브라우저가 이걸로 재요청을 함
+        /* 설명. 리다이렉트는 우리 서블릿 객체뿐 아니라 외부 사이트로도 연결이 가능하다. */
+        resp.sendRedirect("http://www.naver.com");
+    }
+}
