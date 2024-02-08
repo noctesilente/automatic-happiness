@@ -21,7 +21,7 @@ public class RedirectServlet extends HttpServlet {
         /* 설명.
          *  쿠키를 불러오는 방법
          *  1. request header에서 쿠키 목록을 쿠키 배열 형태로 꺼내온다.
-         *  2. 쿠키의 getName()과 getValue()를 이용해 쿠키에 담긴 키와 밸류를 사용한다.
+         *  2. 쿠키의 getName()과 getValue()를 이용해 쿠키에 담긴 키와 밸류를 사용한다.1
         * */
         // 쿠키 한 번에 확인하기
         Cookie[] cookies = req.getCookies();

@@ -41,6 +41,7 @@ public class RequestHeaderPrintServlet extends HttpServlet {
         }
 
         // 결과:
+
         // host
         // connection
         // sec-ch-ua
