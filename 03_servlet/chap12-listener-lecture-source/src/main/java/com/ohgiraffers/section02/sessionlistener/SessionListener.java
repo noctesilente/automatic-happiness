@@ -4,11 +4,24 @@ import jakarta.servlet.annotation.WebListener;
 import jakarta.servlet.http.*;
 
 @WebListener
-public class SessionListener implements HttpSessionListener, HttpSessionAttributeListener {
+public class SessionListener implements HttpSessionListener, HttpSessionAttributeListener, HttpSessionBindingListener {
 
     public SessionListener() {
         System.out.println("session listener 인스턴스 생성!");
     }
+
+    /* 설명. Binding 리스너는 SessionListener가 아닌 Session에 담기는 타입의 클래스에 직접 각각 정의해야 한다. */
+/*    @Override
+    public void valueBound(HttpSessionBindingEvent event) {
+        System.out.println("bound!!");
+    }
+
+    @Override
+    public void valueUnbound(HttpSessionBindingEvent event) {
+        System.out.println("unbound!!");
+    }*/
+
+    // bound, unbound 출력 안 됨! 여기서 먹지 않음
 
     @Override
     public void attributeAdded(HttpSessionBindingEvent event) {
