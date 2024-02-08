@@ -35,7 +35,6 @@ public class RedirectServlet extends HttpServlet {
                 .append(lastName)
                 .append("</h3>");
 
-
         // 한글로 쓰고 싶으면
         resp.setContentType("text/html");
 
