@@ -8,7 +8,7 @@ import java.io.IOException;
 
 // 톰캣 10버전은 이걸 안 해도 됨!
 @WebFilter("/member/*")
-public class EndoingFilter implements Filter {
+public class EncodingFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

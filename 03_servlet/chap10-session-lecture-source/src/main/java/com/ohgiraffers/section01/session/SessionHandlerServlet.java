@@ -57,8 +57,12 @@ public class SessionHandlerServlet extends HttpServlet {
         // request와 session의 차이점:
         // request는 요청이 끝나면 저장 공간이 사라지지만
         // session은 만료 시간까지 쭉 유지함 = 키를 들고 오면 언제든지 사용 가능
+        // request header에는 id만 저장되는 거 헷갈리지 말기!! session은 서버가 가지고 있음
+        // 만료 시간이 다 되면 키를 들고 와도 그 키에 해당하는 session 자체가 없어졌기 때문에 뭘 할 수 없음 = invalidate가 아니라 delete임
 
         // session 기능 확인 위해 redirect 해보기
+        // 세션 키도 결국 쿠키 - 헤더에 넣어서 보냄 - 서버가 들고 있는 거기 때문에 + 클라이언트가 계속 저장해놓고 있는 거라서 - 요청이
+        // 올 때마다 동봉해서 보내는 거기 때문에 리다이렉트로 해서 request, response 가 바뀌어도 그대로임
         resp.sendRedirect("redirect");
     }
 }

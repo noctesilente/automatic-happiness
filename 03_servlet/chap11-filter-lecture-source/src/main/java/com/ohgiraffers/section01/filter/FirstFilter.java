@@ -12,7 +12,7 @@ import java.io.IOException;
 @WebFilter("/first/*")
 public class FirstFilter implements Filter {
 
-    // 기본생성자, init, doFilter, destory
+    // 기본생성자, init, doFilter, destroy
     public FirstFilter() {
         System.out.println("FirstFilter 인스턴스 생성");
     }

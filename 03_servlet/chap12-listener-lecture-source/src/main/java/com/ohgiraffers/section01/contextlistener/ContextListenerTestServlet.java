@@ -14,6 +14,8 @@ public class ContextListenerTestServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // protected 여서 외부에서 접근 불가
+
         // listener 미리 구비
         System.out.println("context listener 확인용 서블릿");
 

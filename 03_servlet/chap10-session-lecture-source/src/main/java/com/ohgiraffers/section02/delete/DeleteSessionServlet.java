@@ -24,6 +24,7 @@ public class DeleteSessionServlet extends HttpServlet {
         // 로그아웃인 것
         // session은 존재하고 attribute를 다시 담을 수 있긴 함
         session.invalidate();
+        // session 틀만 있고 안은 텅 비어버린 것
 
         System.out.println("attribute 만료 후 firstName: " + session.getAttribute("firstName"));
         System.out.println("attribute 만료 후 lastName: " + session.getAttribute("lastName"));

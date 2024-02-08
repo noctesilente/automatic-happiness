@@ -51,4 +51,7 @@ public class ContextListener implements ServletContextListener, ServletContextAt
         /* 설명. context가 소멸될 때 동작하는 메소드이다. */
         System.out.println("context destroyed!!");
     }
+
+    // context 서블릿 여러 개고 listener가 하나라고 해도 다 적용이 됨 = 대신 패키지 하위에 있는 것만!
+    // 다 들을 수 있다!
 }
