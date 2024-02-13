@@ -35,4 +35,10 @@ public class BookDAOImpl implements BookDAO{
         return new ArrayList<>(bookList.values());
     }
 
+    @Override
+    public BookDTO searchBookBySequence(int sequence) {
+        // 키 값이 sequence
+        return bookList.get(sequence);
+    }
+
 }

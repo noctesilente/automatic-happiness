@@ -29,12 +29,18 @@ public class Application {
         BookService bookService = context.getBean("bookService", BookService.class);
         // DAOImpl이 주입된 상태로 옴
 
+        /* 설명. 전체 도서 목록 조회 후 출력 확인 */
         // ArrayList니까 forEach문 이렇게 써주기
         bookService.findAllBook().forEach(System.out::println);
 
         // 결과:
         // BookDTO(sequence=1, isbn=123456, title=자바의 정석, author=남궁성, publisher=도우출판, createdDate=Tue Feb 13 14:40:33 KST 2024)
         // BookDTO(sequence=2, isbn=222333, title=칭찬은 고래도 춤추게 한다, author=고래, publisher=고래출판, createdDate=Tue Feb 13 14:40:33 KST 2024)
+
+
+        /* 설명. 도서 번호로 검색 후 출력 확인 */
+        System.out.println(bookService.searchBookBySequence(1));
+        System.out.println(bookService.searchBookBySequence(2));
 
 
     }

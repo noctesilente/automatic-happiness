@@ -23,8 +23,7 @@ public class BookService {
     // BookDAOImpl
 
 
-    public BookService(BookDAO bookDAO) {
-        this.bookDAO = bookDAO;
+    public BookService() {
     }
 
     /* 설명. 도서 목록 전체 조회 */
@@ -33,4 +32,8 @@ public class BookService {
         // 해서 메소드 BookDAO에서 만들어주면 BookDAOImpl도 그 메소드를 오버라이딩해야 함
     }
 
+    /* 설명. 도서 번호로 도서 조회 */
+    public BookDTO searchBookBySequence(int sequence) {
+        return bookDAO.searchBookBySequence(sequence);
+    }
 }
