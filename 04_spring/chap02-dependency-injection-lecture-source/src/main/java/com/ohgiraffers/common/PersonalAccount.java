@@ -50,4 +50,13 @@ public class PersonalAccount implements Account {
 
         return str;
     }
+
+    @Override
+    public String toString() {
+        return "PersonalAccount{" +
+                "bankCode=" + bankCode +
+                ", accNo='" + accNo + '\'' +
+                ", balance=" + balance +
+                '}';
+    }
 }

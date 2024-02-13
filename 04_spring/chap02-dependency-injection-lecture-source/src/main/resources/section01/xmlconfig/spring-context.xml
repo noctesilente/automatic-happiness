@@ -4,6 +4,30 @@
        xsi:schemaLocation="
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="account" class="com.ohgiraffers.common.PersonalAccount">
+        <constructor-arg index="0" value="20"/>
+        <constructor-arg index="1" value="110-234-45657890"/>
+    </bean>
 
+    <!-- 위 콩을 가진 콩을 만들 것 -->
+    <!-- 1. 생성자 주입 -->
+    <bean id="member" class="com.ohgiraffers.common.MemberDTO">
+        <constructor-arg name="sequence" value="1"/>
+        <constructor-arg name="name" value="홍길동"/>
+        <constructor-arg name="phone" value="010-1234-5678"/>
+        <constructor-arg name="email" value="hong123@gmail.com"/>
+        <constructor-arg name="personalAccount">
+                <ref bean = "account"/>
+        </constructor-arg>
+    </bean>
+
+    <!-- 2. setter 주입 -->
+    <bean id="member" class="com.ohgiraffers.common.MemberDTO">
+        <property name="sequence" value="1"/>
+        <property name="name" value="홍길동"/>
+        <property name="phone" value="010-1234-5678"/>
+        <property name="email" value="hong123@gmail.com"/>
+        <property name="personalAccount" ref="account"/>
+    </bean>
 
 </beans>
