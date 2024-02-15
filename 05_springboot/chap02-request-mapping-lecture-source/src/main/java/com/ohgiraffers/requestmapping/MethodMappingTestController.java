@@ -25,7 +25,8 @@ public class MethodMappingTestController {
         // key와 value 형태로 model에 담기
         model.addAttribute("message", "신규 메뉴 등록용 핸들러 메소드 호출함");
 
-        /* 설명.  */
+        /* 설명. 핸들러 메소드에서 반환하는 String 값은 templates에 있는 view(html 파일)의 이름이다. */
+        // viewResolver가 받음
         return "mappingResult";
         // 사용자한테 주고 싶은 화면을 만든 후 우리가 만든 파일명을 내보내는 것
         // 동적으로 건드려서 만든 것이라서 templates에 mappingResult.html 만들기
