@@ -183,6 +183,7 @@ public class FirstController {
     }
 
     /* 설명. @SessionAttributes 방식으로 Session에 담긴 값은 SessionStatus에서 제공하는 setComplete()로 만료시켜야 한다. */
+    // session은 invalidate가 안 먹음
     @GetMapping("logout2")
     public String logoutTest2(SessionStatus sessionStatus) {
         sessionStatus.setComplete();
