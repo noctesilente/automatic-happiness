@@ -16,6 +16,7 @@ public class RootConfiguration {
         Properties props = new Properties();
         props.setProperty("java.lang.NullPointerException", "error/nullPointer");
         // NullPointerException이 발생하면 error 파일 밑에 있는 nullPointer.html로 가라는 뜻
+        props.setProperty("MemberRegistException", "error/memberRegist");
 
         /* 설명. 전체 예외 관련되어 SimpleMappingExceptionResolver에 설정하기 */
 
