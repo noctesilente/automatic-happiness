@@ -144,7 +144,7 @@ public class FileUploadController {
                 Map<String, String> file = files.get(i);
                 new File(filePath + "/" + file.get("savedName")).delete();
                 // 예외가 발생하기 전에 반복이 돌고 있음
-                // map 에 담고 나서 transferto 로 파일에 담기는 과정
+                // map 에 담고 나서 transfer to 로 파일에 담기는 과정
                 // 그러다가 files.size만큼 돌면서
                 // 성공한 개수만큼 쌓였을 거고
                 // 하나씩 꺼내서 일치하면 지우는 작업을 해줌
@@ -153,7 +153,6 @@ public class FileUploadController {
             /* 설명. 실패했다면 실패 메시지를 전달한다. */
             rttr.addFlashAttribute("message", "파일 업로드 실패!");
         }
-
         return "redirect:/result";
     }
 

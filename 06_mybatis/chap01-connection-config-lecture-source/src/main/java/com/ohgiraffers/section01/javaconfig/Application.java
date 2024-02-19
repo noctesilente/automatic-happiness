@@ -10,6 +10,8 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
 public class Application {
 
+    // 냅다 넣어서 호출
+
     private static String driver = "com.mysql.cj.jdbc.Driver";
     private static String url = "jdbc:mysql://localhost:3306/menudb";
 
@@ -34,6 +36,9 @@ public class Application {
 
         Configuration configuration = new Configuration(environment);
         configuration.addMapper(Mapper.class);
+
+        // 빌더 = 팩토리를 만들어주는 일꾼
+        // 팩토리를 다 지었으면 맨마지막에 클로즈를 해줌 - 해고시킴
 
         /* 필기.
          *  SqlSessionFactory: SqlSession 객체를 생성하기 위한 팩토리 역할의 인터페이스

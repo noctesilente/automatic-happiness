@@ -16,6 +16,7 @@ public class Application {
         String resource = "mybatis-config.xml";
 
         // xml 방식으로 하려면 스트림을 열고 읽어와야 함
+        // 인풋스트림에 담아놓고 팩토리에 넣는 식으로 구현
         try {
             InputStream inputStream = Resources.getResourceAsStream(resource);
 
