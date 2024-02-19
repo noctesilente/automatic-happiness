@@ -33,6 +33,7 @@ public class StopwatchInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         /* 8-3. 핸들러 메소드 가기도 전인데 서비스에 있는 메소드 호출 */
+        /* 설명. 핸들어 인터셉터는 bean을 활용할 수 있다.(@Service 계층의 객체도 bean이다.) */
         // 이 한 줄 추가하기
         // 좋은 패턴은 아니지만 경우에 따라서는 컨트롤러를 건너뛰고 메소드를 호출할 수 있음
         // 굉장히 특별한 경우
@@ -44,6 +45,9 @@ public class StopwatchInterceptor implements HandlerInterceptor {
         long startTime = System.currentTimeMillis();
         // 값이 넘어와야 되니까 request에 담은 것
         request.setAttribute("startTime", startTime);
+
+        /* 설명. 반환형을 false로 하면 특정 조건에 의해 핸들러 메소드가 실행되지 않게 할 수도 있다. */
+//        return false;
 
         return true;
         // false를 반환하면 핸들러 메소드가 등장하지 않고 true를 반환해야지 핸들러 메소드가 작동함

@@ -28,7 +28,9 @@ public class WebConfiguration implements WebMvcConfigurer {
     // ctrl+O 사용해서 addInterceptors 사용
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(stopwatchInterceptor);
+        registry.addInterceptor(stopwatchInterceptor)
+                // 이건 12번!
+                .excludePathPatterns("/css/**");        // excludePathPatterns를 등록해준 경로의 요청은 인터셉터가 가로채지 않음
         // 이렇게 우리의 interceptor를 등록해줘야지 사용을 할 수 있음!
     }
     // 등록하고 실행하면
