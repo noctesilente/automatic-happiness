@@ -16,5 +16,6 @@
     </environments>
     <mappers>
         <mapper resource="mapper.xml"/>
+<!--        경로에 있는 매퍼를 싹 다 긁어올 수도 있음-->
     </mappers>
 </configuration>
