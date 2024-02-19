@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
+import java.util.*;
 
 /* 3-1 */
 @Controller
@@ -89,6 +89,70 @@ public class FileUploadController {
             new File(filePath + "/" + savedName).delete();
         }
         // 이렇게 던져주면 singleFile에 알아서 던져줌
+
+        return "redirect:/result";
+    }
+
+    /* 8-1 */
+    @PostMapping("multi-file")
+    public String multiFileUpload(@RequestParam List<MultipartFile> multiFiles,
+                                  @RequestParam String multiFileDescription,
+                                  RedirectAttributes rttr) throws IOException {
+//        System.out.println("multiFile = " + multiFile);
+//        System.out.println("multiFileDescription = " + multiFileDescription);
+        String filePath = resourceLoader.getResource("classpath:static/uploadFiles/img/multi")
+                .getFile()
+                .getAbsolutePath();
+
+
+        /* 8-2 */
+        /* 설명. 사용자가 올린 파일들을 다 rename하고 저장하는 작업 및 DB로 전달하기 위한 List에 쌓기 */
+        // DTO 안 쓸 것!
+        List<Map<String, String>> files = new ArrayList<>();        // DB에 저장할 값들을 지닌 List
+        List<String> saveFiles = new ArrayList<>();                 // 화면단에서 img 태그가 참조할 정적 리소스 경로(src 경로)
+
+        try {
+
+            for (int i = 0; i < multiFiles.size(); i++) {
+                String originFileName = multiFiles.get(i).getOriginalFilename();
+                String ext = originFileName.substring(originFileName.lastIndexOf("."));
+                String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
+
+                /* 설명. DB에 저장할 사용자가 올린 하나의 파일 정보(DB 테이블 컬럼을 참고할 것) */
+                Map<String, String> file = new HashMap<>();
+                file.put("originFileName", originFileName);
+                file.put("savedName", savedName);
+                file.put("filePath", filePath);
+
+                files.add(file);
+
+                multiFiles.get(i).transferTo(new File(filePath + "/" + savedName));
+                saveFiles.add("uploadFiles/img/multi/" + savedName);
+
+
+            }
+
+            /* 설명. 여기까지 문제가 없었다면 화면의 재료를 던져준다. */
+            rttr.addFlashAttribute("message", "다중 파일 업로드 성공!");
+            rttr.addFlashAttribute("imgs", saveFiles);
+            rttr.addFlashAttribute("multiFileDescription", multiFileDescription);
+
+        } catch (Exception e) {
+
+            /* 설명. List<Map<String, String>>으로 쌓인 업로드 된 파일들을 찾아 일일이 다시 지운다. */
+            for (int i = 0; i < files.size(); i++) {
+                Map<String, String> file = files.get(i);
+                new File(filePath + "/" + file.get("savedName")).delete();
+                // 예외가 발생하기 전에 반복이 돌고 있음
+                // map 에 담고 나서 transferto 로 파일에 담기는 과정
+                // 그러다가 files.size만큼 돌면서
+                // 성공한 개수만큼 쌓였을 거고
+                // 하나씩 꺼내서 일치하면 지우는 작업을 해줌
+            }
+
+            /* 설명. 실패했다면 실패 메시지를 전달한다. */
+            rttr.addFlashAttribute("message", "파일 업로드 실패!");
+        }
 
         return "redirect:/result";
     }
