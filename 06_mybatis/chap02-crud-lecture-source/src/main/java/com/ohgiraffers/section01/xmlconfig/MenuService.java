@@ -41,4 +41,55 @@ public class MenuService {
 
         return menu;
     }
+
+    /* 8-4 */
+    public boolean registMenu(MenuDTO menu) {
+        SqlSession sqlSession = getSqlSession();
+
+        int result = menuDAO.insertMenu(sqlSession, menu);
+
+        if (result > 0) {
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+
+        sqlSession.close();
+
+        return (result > 0) ? true : false;
+    }
+
+    /* 9-5 */
+    public boolean modifyMenu(MenuDTO menu) {
+        SqlSession sqlSession = getSqlSession();
+
+        int result = menuDAO.updateMenu(sqlSession, menu);
+
+        if (result > 0) {
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+
+        sqlSession.close();
+
+        return (result > 0) ? true : false;
+    }
+
+    /* 10-4 */
+    public boolean removeMenu(int menuCode) {
+        SqlSession sqlSession = getSqlSession();
+
+        int result = menuDAO.deleteMenu(sqlSession, menuCode);
+
+        if (result > 0) {
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+
+        sqlSession.close();
+
+        return (result > 0) ? true : false;
+    }
 }

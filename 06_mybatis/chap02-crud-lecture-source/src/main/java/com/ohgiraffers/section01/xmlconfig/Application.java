@@ -1,5 +1,6 @@
 package com.ohgiraffers.section01.xmlconfig;
 
+import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -32,9 +33,19 @@ public class Application {
                     /* 7-1 */
                     menuController.findMenuByMenuCode(inputMenuCode());
                     break;
-                case 3: break;
-                case 4: break;
-                case 5: break;
+                case 3:
+                    /* 8-1 */
+                    // 뭉치는 건 컨트롤러로 뭉치고 맵 형태로 받음
+                    menuController.registMenu(inputMenu());
+                    break;
+                case 4:
+                    /* 9-1 */
+                    menuController.modifyMenu(inputModifyMenu());
+                    break;
+                case 5:
+                    /* 10-1 */
+                    menuController.removeMenu(inputMenuCode());
+                    break;
                 case 9:
                     System.out.println("프로그램을 종료합니다.");
                     return;
@@ -44,6 +55,7 @@ public class Application {
 
         } while (true);
     }
+
 
     /* 7-2 */
     /* 설명. 사용자의 입력 값을 Map 형태로 반환(web에서는 key와 value 형태로 request 객체에 담기는 parameter로 생각) */
@@ -58,4 +70,43 @@ public class Application {
 
         return parameter;
     }
+
+    /* 8-2 */
+    private static Map<String, String> inputMenu() {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("신규 메뉴의 이름을 입력해 주세요: ");
+        String menuName = sc.nextLine();
+        System.out.print("신규 메뉴의 가격을 입력해 주세요: ");
+        String menuPrice = sc.nextLine();
+        System.out.print("신규 메뉴의 카테고리 코드를 입력해 주세요: ");
+        String categoryCode = sc.nextLine();
+
+        Map<String, String> parameter = new HashMap<>();
+        parameter.put("menuName", menuName);
+        parameter.put("menuPrice", menuPrice);
+        parameter.put("categoryCode", categoryCode);
+
+        return parameter;
+    }
+
+    /* 9-2 */
+    private static Map<String, String> inputModifyMenu() {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("변경할 메뉴의 번호를 입력해 주세요: ");
+        String menuCode = sc.nextLine();
+        System.out.print("변경할 메뉴의 이름을 입력해 주세요: ");
+        String menuName = sc.nextLine();
+        System.out.print("변경할 메뉴의 가격을 입력해 주세요: ");
+        String menuPrice = sc.nextLine();
+
+        Map<String, String> parameter = new HashMap<>();
+        parameter.put("menuCode", menuCode);
+        parameter.put("menuName", menuName);
+        parameter.put("menuPrice", menuPrice);
+
+        return parameter;
+    }
+
 }

@@ -3,6 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
+<!--    8-7-->
+    <typeAliases>
+        <typeAlias type="com.ohgiraffers.section01.xmlconfig.MenuDTO" alias="MenuDTO"/>
+    </typeAliases>
+
 <!--    5-1-->
     <environments default="dev">
         <environment id="dev">

@@ -1,5 +1,6 @@
 package com.ohgiraffers.section01.xmlconfig;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
@@ -56,4 +57,63 @@ public class MenuController {
         }
     }
 
+    /* 8-3 */
+    public void registMenu(Map<String, String> parameter) {
+        String menuName = parameter.get("menuName");
+        int menuPrice = Integer.valueOf(parameter.get("menuPrice"));
+        int categoryCode = Integer.valueOf(parameter.get("categoryCode"));
+
+        MenuDTO menu = new MenuDTO();
+        menu.setMenuName(menuName);
+        menu.setMenuPrice(menuPrice);
+        menu.setCategoryCode(categoryCode);
+
+        /* 11-1 */
+//        boolean result = menuService.registMenu(menu);
+//        System.out.println("result = " + result);
+        if (menuService.registMenu(menu)) {
+            // boolean형이기 때문에 이게 잘 넘어왔다면을 가정함
+            printResult.printSuccessMessage("regist");
+
+        } else {
+            printResult.printErrorMessage("메뉴 추가 실패!");
+        }
+
+    }
+
+    /* 9-4 */
+    public void modifyMenu(Map<String, String> parameter) {
+        int menuCode = Integer.valueOf(parameter.get("menuCode"));
+        String menuName = parameter.get("menuName");
+        int menuPrice = Integer.valueOf(parameter.get("menuPrice"));
+
+        // 생성자 추가 대신 세터 쓰기
+        MenuDTO menu = new MenuDTO();
+        menu.setMenuCode(menuCode);
+        menu.setMenuName(menuName);
+        menu.setMenuPrice(menuPrice);
+
+        /* 11-3 */
+//        boolean result = menuService.modifyMenu(menu);
+//        System.out.println("result = " + result);
+        if (menuService.modifyMenu(menu)) {
+            printResult.printSuccessMessage("modify");
+        } else {
+            printResult.printErrorMessage("메뉴 수정 실패!");
+        }
+    }
+
+    /* 10-3 */
+    public void removeMenu(Map<String, String> parameter) {
+        int menuCode = Integer.valueOf(parameter.get("menuCode"));
+
+        /* 11-4 */
+//        boolean result = menuService.removeMenu(menuCode);
+//        System.out.println("result = " + result);
+        if (menuService.removeMenu(menuCode)) {
+            printResult.printSuccessMessage("remove");
+        } else {
+            printResult.printErrorMessage("메뉴 삭제 실패!");
+        }
+    }
 }
