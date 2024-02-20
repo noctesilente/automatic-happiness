@@ -62,6 +62,10 @@ public class MenuService {
         SqlSession sqlSession = getSqlSession();
 
         MenuMapper menuMapper = sqlSession.getMapper(MenuMapper.class);
+        // 왜 int? -> sql에서 쿼리를 날렸을 때 성공한 개수를 반환해줌
+        // result = 0 -> 성공한 게 없다는 뜻
+        // 쿼리를 3개 날렸을 때 2개 돌아오면 안 되기 때문에 result 개수를 보고 바라는
+        // 반환값이랑 다르면 rollback
         int result = menuMapper.updateMenu(menu);
 
         if(result > 0) {
