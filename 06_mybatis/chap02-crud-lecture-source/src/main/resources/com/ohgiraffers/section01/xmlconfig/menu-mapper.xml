@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MenuMapper">
+<!--    5-3-->
+    <resultMap id="menuResultMap" type="com.ohgiraffers.section01.xmlconfig.MenuDTO">
+<!--        매핑의 결과가 menuDTO가 되도록 세팅하는 것-->
+<!--        매핑용 모듈-->
+        <id property="menuCode" column="MENU_CODE"/>
+        <result property="menuName" column="MENU_NAME"/>
+        <result property="menuPrice" column="MENU_PRICE"/>
+        <result property="categoryCode" column="CATEGORY_CODE"/>
+        <result property="orderableStatus" column="ORDERABLE_STATUS"/>
+    </resultMap>
+<!--    5-2-->
+    <select id="selectAllMenus" resultMap="menuResultMap">
+<!--        * 쓰면 안 됨 귀찮더라도 컬럼 다 가져오기-->
+        SELECT
+              MENU_CODE
+            , MENU_NAME
+            , MENU_PRICE
+            , CATEGORY_CODE
+            , ORDERABLE_STATUS
+        FROM TBL_MENU
+    </select>
+
+<!--    7-6-->
+    <select id="selectMenu" resultMap="menuResultMap" parameterType="_int">
+        SELECT
+          MENU_CODE
+        , MENU_NAME
+        , MENU_PRICE
+        , CATEGORY_CODE
+        , ORDERABLE_STATUS
+        FROM TBL_MENU
+<!--        넘겨줄 때 변수 이름을 맞춰서 써줌-->
+        WHERE MENU_CODE = #{menuCode}
+<!--        ?{} = 리터럴 변수 #{} = 바인드 변수 - 바인드 변수로 해주는 것이 속도가 훨씬 빠름 - 리터럴 변수는 전부 파싱하기 때문-->
+    </select>
+</mapper>
