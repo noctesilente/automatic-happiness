@@ -2,7 +2,6 @@ package com.ohgiraffers.section03.remix;
 
 import java.util.List;
 
-/* 1-4 */
 public class PrintResult {
     public void printMenus(List<MenuDTO> menuList) {
         menuList.forEach(System.out::println);

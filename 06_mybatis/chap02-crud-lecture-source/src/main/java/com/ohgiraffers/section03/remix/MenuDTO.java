@@ -1,6 +1,5 @@
 package com.ohgiraffers.section03.remix;
 
-/* 1-5 */
 public class MenuDTO {
 
     private int menuCode;
