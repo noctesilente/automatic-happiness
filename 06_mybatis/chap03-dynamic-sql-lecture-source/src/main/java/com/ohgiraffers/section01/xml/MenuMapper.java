@@ -11,5 +11,5 @@ public interface MenuMapper {
 
     List<MenuDTO> searchMenuBySupCategory(SearchCriteria searchCriteria);
 
-    List<MenuDTO> searchMenuByRandomMenuCode(List randomList);
+    List<MenuDTO> searchMenuByRandomMenuCode(List<Integer> randomList);
 }

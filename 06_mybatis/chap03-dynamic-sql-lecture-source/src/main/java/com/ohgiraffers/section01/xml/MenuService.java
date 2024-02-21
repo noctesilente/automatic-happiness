@@ -48,7 +48,7 @@ public class MenuService {
         sqlSession.close();
     }
 
-    public void searchMenuByRandomMenuCode(List randomList) {
+    public void searchMenuByRandomMenuCode(List<Integer> randomList) {
         SqlSession sqlSession = getSqlSession();
         MenuMapper mapper = sqlSession.getMapper(MenuMapper.class);
 
