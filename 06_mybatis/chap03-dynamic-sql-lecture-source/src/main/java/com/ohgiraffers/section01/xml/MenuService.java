@@ -93,4 +93,22 @@ public class MenuService {
 
         sqlSession.close();
     }
+
+    public void modifyMenu(Map<String, Object> criteria) {
+
+        SqlSession sqlSession = getSqlSession();
+        MenuMapper mapper = sqlSession.getMapper(MenuMapper.class);
+
+        int result = mapper.updateMenu(criteria);
+
+        if (result > 0) {
+            System.out.println("메뉴 정보 변경에 성공하셨습니다.");
+            sqlSession.commit();
+        } else {
+            System.out.println("메뉴 정보 변경에 실패하셨습니다.");
+            sqlSession.rollback();
+        }
+
+        sqlSession.close();
+    }
 }

@@ -227,6 +227,7 @@ public class Application {
 
     private static Map<String, Object> inputChangeInfo() {
         Scanner sc = new Scanner(System.in);
+
         System.out.print("변경할 메뉴 코드를 입력하세요: ");
         int menuCode = sc.nextInt();
         System.out.print("변경할 메뉴 이름을 입력하세요: ");

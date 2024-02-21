@@ -155,16 +155,47 @@
         , A.CATEGORY_CODE
         , A.ORDERABLE_STATUS
          FROM TBL_MENU A
-        <where>
-<!--            if 문 안에는 where 안 쓰고 이렇게 크게 달아주기-->
+<!--        <where>-->
+<!--&lt;!&ndash;            if 문 안에는 where 안 쓰고 이렇게 크게 달아주기&ndash;&gt;-->
+<!--            <if test="nameValue != null">-->
+<!--                A.MENU_NAME LIKE CONCAT('%', #{ nameValue }, '%')-->
+<!--            </if>-->
+<!--            <if test="categoryValue != null">-->
+<!--                AND A.CATEGORY_CODE = #{ categoryValue }-->
+<!--            </if>-->
+<!--        </where>-->
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+<!--            앞에 다 WHERE을 붙이되 AND나 OR가 있는 것들도 다 WHERE로 바꿔줌-->
             <if test="nameValue != null">
                 A.MENU_NAME LIKE CONCAT('%', #{ nameValue }, '%')
             </if>
             <if test="categoryValue != null">
                 AND A.CATEGORY_CODE = #{ categoryValue }
             </if>
-        </where>
-
-
+        </trim>
     </select>
+
+    <update id="updateMenu" parameterType="hashmap">
+        UPDATE
+            TBL_MENU
+<!--        <set>-->
+<!--            <if test="menuName != null and menuName != ''">-->
+<!--                MENU_NAME = #{menuName}-->
+<!--            </if>-->
+<!--            <if test="orderableStatus != null and orderableStatus != ''">-->
+<!--                , ORDERABLE_STATUS = #{orderableStatus}-->
+<!--            </if>-->
+<!--        </set>-->
+
+        <trim prefix="SET" prefixOverrides=",">
+            <if test="menuName != null and menuName != ''">
+                MENU_NAME = #{menuName}
+            </if>
+            <if test="orderableStatus != null and orderableStatus != ''">
+                , ORDERABLE_STATUS = #{orderableStatus}
+            </if>
+        </trim>
+            WHERE MENU_CODE = #{menuCode}
+    </update>
 </mapper>
