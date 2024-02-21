@@ -1,6 +1,6 @@
 package com.ohgiraffers.section01.xml;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Application {
 
@@ -25,6 +25,7 @@ public class Application {
                     chooseSubMenu();
                     break;
                 case 3:
+                    forEachSubMenu();
                     break;
                 case 4:
                     break;
@@ -106,4 +107,44 @@ public class Application {
         return new SearchCriteria("category", value);
     }
 
+    public static void forEachSubMenu() {
+        Scanner sc = new Scanner(System.in);
+        MenuService menuService = new MenuService();
+
+        do {
+            System.out.println("======== foreach 서브 메뉴 ========");
+            System.out.println("1. 랜덤한 메뉴 5개 추출해서 조회하기");
+            System.out.println("9. 이전 메뉴로");
+            System.out.print("메뉴 번호를 입력하세요: ");
+            int no = sc.nextInt();
+
+            switch (no) {
+                case 1:
+                    menuService.searchMenuByRandomMenuCode(generateRandomMenuCodeList());
+                    break;
+                case 9:
+                    return;
+            }
+        } while (true);
+    }
+
+    /* 설명. 1부터 21까지의 5개의 중복되지 않는 번호 생성해 List에 쌓아 반환하는 메소드 */
+    // 다른 데에서 접근이 안 되도록 private
+    private static List<Integer> generateRandomMenuCodeList() {
+        // 1부터 21까지의 난수를 생성해서 5개가 쌓이도록 난수 뽑기
+        Set<Integer> set = new HashSet<>();
+        while (set.size() < 5) {
+            int temp = (int) (Math.random() * 21) + 1;
+            set.add(temp);
+        }
+
+        /* 설명. set을 List 형태로 바꿔서 오름파순 정렬까지 진행 */
+        List<Integer> list = new ArrayList<>(set);
+        Collections.sort(list);
+
+        // 로그 찍기
+        System.out.println("랜덤 수 생성한 메소드가 반환하는 list: " + list);
+
+        return list;
+    }
 }

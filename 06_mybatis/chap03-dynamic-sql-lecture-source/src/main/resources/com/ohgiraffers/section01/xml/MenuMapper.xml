@@ -105,4 +105,29 @@
             </when>
         </choose>
     </select>
+
+    <select id="searchMenuByRandomMenuCode" resultMap="menuResultMap">
+        SELECT
+          A.MENU_CODE
+        , A.MENU_NAME
+        , A.MENU_PRICE
+        , A.CATEGORY_CODE
+        , A.ORDERABLE_STATUS
+         FROM TBL_MENU A
+<!--        WHERE A.ORDERABLE_STATUS = 'Y'-->
+         WHERE A.MENU_CODE IN
+
+        <!-- 설명. list 또는 map과 같은 컬렉션 타이븡로 넘어온 값을 가지고 반복해서 원하는 sql을 작성할 수 있다. -->
+        <foreach collection="list"
+                 item="menuCode" open="(" close=")" separator=", ">
+            #{menuCode}
+        </foreach>
+
+        <!-- 설명. 원하는 곳에 있는 메소드의 반환 값을 바로 활용할 수도 있다.(권장되진 않음) -->
+<!--        <foreach collection="@com.ohgiraffers.section01.xml.Application@generateRandomMenuCodeList()"-->
+<!--                 item="menuCode" open="(" close=")" separator=", ">-->
+<!--            #{menuCode}-->
+<!--        </foreach>-->
+
+    </select>
 </mapper>
