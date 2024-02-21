@@ -41,6 +41,7 @@ public class Application {
     private static void ifSubMenu() {
         Scanner sc = new Scanner(System.in);
         MenuService menuService = new MenuService();
+
         do {
             System.out.println("======== if 서브 메뉴 ========");
             System.out.println("1. 원하는 금액대에 적합한 추천 메뉴 목록 보여주기");

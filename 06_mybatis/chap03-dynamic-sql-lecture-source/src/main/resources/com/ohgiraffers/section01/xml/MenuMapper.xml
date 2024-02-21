@@ -24,7 +24,7 @@
          3. lte(<=): less than equal
          4. lt(<): less than
          5. eq(==): equal
-         6. ne(!=): not equal
+         6. neq(!=): not equal
 
     -->
     <select id="selectMenuByPrice" parameterType="_int" resultMap="menuResultMap">
@@ -94,6 +94,7 @@
         FROM TBL_MENU A
         WHERE A.ORDERABLE_STATUS = 'Y'
         <choose>
+<!--            choose = switch, when = case -->
             <when test="value == '식사'">
                 AND A.CATEGORY_CODE IN (4, 5, 6, 7)
             </when>
@@ -117,7 +118,7 @@
         <!--        WHERE A.ORDERABLE_STATUS = 'Y'-->
         WHERE A.MENU_CODE IN
 
-        <!-- 설명. list 또는 map과 같은 컬렉션 타이븡로 넘어온 값을 가지고 반복해서 원하는 sql을 작성할 수 있다. -->
+        <!-- 설명. list 또는 map과 같은 컬렉션 타입로 넘어온 값을 가지고 반복해서 원하는 sql을 작성할 수 있다. -->
         <foreach collection="list"
                  item="menuCode" open="(" close=")" separator=", ">
             #{menuCode}
