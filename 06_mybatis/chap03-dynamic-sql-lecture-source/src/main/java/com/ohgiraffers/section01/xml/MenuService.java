@@ -1,5 +1,6 @@
 package com.ohgiraffers.section01.xml;
 
+import org.apache.ibatis.jdbc.SQL;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -16,5 +17,29 @@ public class MenuService {
         List<MenuDTO> menus = mapper.selectMenuByPrice(maxPrice);
         System.out.println("service: ");
         menus.forEach(System.out::println);
+    }
+
+    public void searchMenu(SearchCriteria searchCriteria) {
+
+        SqlSession sqlSession = getSqlSession();
+        MenuMapper mapper = sqlSession.getMapper(MenuMapper.class);
+
+        List<MenuDTO> menus = mapper.searchMenu(searchCriteria);
+        System.out.println("service: ");
+        menus.forEach(System.out::println);
+    }
+
+    public void searchMenuBySupCategory(SearchCriteria searchCriteria) {
+        SqlSession sqlSession = getSqlSession();
+        MenuMapper mapper = sqlSession.getMapper(MenuMapper.class);
+
+        List<MenuDTO> menus = mapper.searchMenuBySupCategory(searchCriteria);
+
+        if (menus.size() > 0) {
+            // menus 안에 담긴 개수가 0보다 많으면
+            menus.forEach(System.out::println);
+        } else {
+            System.out.println("DB와 연동 실패 또는 검색 결과 없음");
+        }
     }
 }
