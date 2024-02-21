@@ -29,16 +29,16 @@
     -->
     <select id="selectMenuByPrice" parameterType="_int" resultMap="menuResultMap">
         SELECT
-                A.MENU_CODE
-              , A.MENU_NAME
-              , A.MENU_PRICE
-              , A.CATEGORY_CODE
-              , A.ORDERABLE_STATUS
-          FROM TBL_MENU A
-         WHERE A.ORDERABLE_STATUS = 'Y'
+        A.MENU_CODE
+        , A.MENU_NAME
+        , A.MENU_PRICE
+        , A.CATEGORY_CODE
+        , A.ORDERABLE_STATUS
+        FROM TBL_MENU A
+        WHERE A.ORDERABLE_STATUS = 'Y'
         <if test="maxPrice gte 0 and maxPrice lte 10000">
-<!--        gte = greater than equal = 크거나 같다, lte = less than equal = 작거나 같다  -이런 표현식을 OGNL 표현식이라고 함 -->
-<!--            < 를 여기서 쓰면 인식해버리기 때문에 앞에 <![CDATA 등을 추가하고 OGNL 표현식으로 표현 -->
+            <!--        gte = greater than equal = 크거나 같다, lte = less than equal = 작거나 같다  -이런 표현식을 OGNL 표현식이라고 함 -->
+            <!--            < 를 여기서 쓰면 인식해버리기 때문에 앞에 <![CDATA 등을 추가하고 OGNL 표현식으로 표현 -->
             <![CDATA[
             AND A.MENU_PRICE < #{ maxPrice }
             ]]>
@@ -62,19 +62,19 @@
 
     <select id="searchMenu" parameterType="com.ohgiraffers.section01.xml.SearchCriteria" resultMap="menuResultMap">
         SELECT
-            A.MENU_CODE
-          , A.MENU_NAME
-          , A.MENU_PRICE
-          , A.CATEGORY_CODE
-          , A.ORDERABLE_STATUS
-         FROM TBL_MENU A
+        A.MENU_CODE
+        , A.MENU_NAME
+        , A.MENU_PRICE
+        , A.CATEGORY_CODE
+        , A.ORDERABLE_STATUS
+        FROM TBL_MENU A
         <if test="condition == 'category'">
             JOIN TBL_CATEGORY B ON (A.CATEGORY_CODE = B.CATEGORY_CODE)
         </if>
         WHERE A.ORDERABLE_STATUS = 'Y'
         <if test="condition == 'name'">
             AND A.MENU_NAME LIKE CONCAT('%', #{value}, '%')
-<!--            사용자가 입력한 value 값은 like 문으로 활용되는 것-->
+            <!--            사용자가 입력한 value 값은 like 문으로 활용되는 것-->
         </if>
         <if test="condition == 'category'">
             AND B.CATEGORY_NAME = #{value}
@@ -108,14 +108,14 @@
 
     <select id="searchMenuByRandomMenuCode" resultMap="menuResultMap">
         SELECT
-          A.MENU_CODE
+        A.MENU_CODE
         , A.MENU_NAME
         , A.MENU_PRICE
         , A.CATEGORY_CODE
         , A.ORDERABLE_STATUS
-         FROM TBL_MENU A
-<!--        WHERE A.ORDERABLE_STATUS = 'Y'-->
-         WHERE A.MENU_CODE IN
+        FROM TBL_MENU A
+        <!--        WHERE A.ORDERABLE_STATUS = 'Y'-->
+        WHERE A.MENU_CODE IN
 
         <!-- 설명. list 또는 map과 같은 컬렉션 타이븡로 넘어온 값을 가지고 반복해서 원하는 sql을 작성할 수 있다. -->
         <foreach collection="list"
@@ -124,10 +124,47 @@
         </foreach>
 
         <!-- 설명. 원하는 곳에 있는 메소드의 반환 값을 바로 활용할 수도 있다.(권장되진 않음) -->
-<!--        <foreach collection="@com.ohgiraffers.section01.xml.Application@generateRandomMenuCodeList()"-->
-<!--                 item="menuCode" open="(" close=")" separator=", ">-->
-<!--            #{menuCode}-->
-<!--        </foreach>-->
+        <!--        <foreach collection="@com.ohgiraffers.section01.xml.Application@generateRandomMenuCodeList()"-->
+        <!--                 item="menuCode" open="(" close=")" separator=", ">-->
+        <!--            #{menuCode}-->
+        <!--        </foreach>-->
+    </select>
+
+    <select id="searchMenuByCodeOrSearchAll" parameterType="com.ohgiraffers.section01.xml.SearchCriteria"
+            resultMap="menuResultMap">
+        SELECT
+              A.MENU_CODE
+            , A.MENU_NAME
+            , A.MENU_PRICE
+            , A.CATEGORY_CODE
+            , A.ORDERABLE_STATUS
+        FROM TBL_MENU A
+        <if test="condition != null and condition eq 'menuCode'">
+            WHERE A.MENU_CODE = #{value}
+<!--            4개를 조건으로 걸었는데 맨처음 조건을 만족 못 하면 AND 로 시작하게 됨 -> 그럼 다 일일이 WHERE로 바꿔줘야 함-->
+        </if>
+    </select>
+
+    <select id="searchMenuByNameOrCategory"
+            parameterType="hashmap"
+            resultMap="menuResultMap">
+        SELECT
+          A.MENU_CODE
+        , A.MENU_NAME
+        , A.MENU_PRICE
+        , A.CATEGORY_CODE
+        , A.ORDERABLE_STATUS
+         FROM TBL_MENU A
+        <where>
+<!--            if 문 안에는 where 안 쓰고 이렇게 크게 달아주기-->
+            <if test="nameValue != null">
+                A.MENU_NAME LIKE CONCAT('%', #{ nameValue }, '%')
+            </if>
+            <if test="categoryValue != null">
+                AND A.CATEGORY_CODE = #{ categoryValue }
+            </if>
+        </where>
+
 
     </select>
 </mapper>
