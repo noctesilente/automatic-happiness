@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,7 +44,15 @@ public class OrderService {
             menuCode.add(orderMenu.getMenuCode());
         }
 
-        System.out.println("menuCode = " + menuCode);
+//        System.out.println("menuCode = " + menuCode);
+
+        Map<String, List<Integer>> map = new HashMap<>();
+        map.put("menuCodes", menuCode);
+        // menuCode를 menuCodes라는 키와 함께 넘김
+
+        List<Menu> menus = menuMapper.selectMenuByMenuCodes(map);
+        /* 단축키. soutc */
+        menus.forEach(System.out::println);
 
         /* 설명. 2. 주문한 메뉴별로 Menu 엔티티에 담아서 조회(select)해 오기(부가적인 메뉴의 정보 추출) */
         // 메뉴 코드를 가져온 상태에서 부가적인 메뉴 정보를 가져오겠다는 뜻
