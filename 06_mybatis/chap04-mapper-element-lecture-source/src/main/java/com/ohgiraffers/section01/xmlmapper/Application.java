@@ -38,8 +38,10 @@ public class Application {
                     elementService.selectResultMapTest();
                     break;
                 case 2:
+                    elementService.selectResultMapAssociationTest();
                     break;
                 case 3:
+                    elementService.selectResultMapCollectionTest();
             }
 
         } while (true);
