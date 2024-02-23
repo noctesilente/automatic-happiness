@@ -3,5 +3,40 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ohgiraffers.transactional.section01.annotation.OrderMapper">
+    <insert id="registOrder">
+        INSERT
+          INTO TBL_ORDER
+        (
+          ORDER_DATE
+        , ORDER_TIME
+        , TOTAL_ORDER_PRICE
+        )
+        VALUES
+        (
+          #{orderDate}
+        , #{orderTime}
+        , #{totalOrderPrice}
+        )
+<!--        insert와 동시에 조회를 할 수 있음-->
+        <selectKey keyProperty="orderCode" order="AFTER" resultType="_int">
+<!--            SELECT LAST_INSERT_ID() 로 해줄 수도 있고 -->
+            SELECT MAX(ORDER_CODE) FROM TBL_ORDER
+        </selectKey>
+    </insert>
 
+    <insert id="registOrderMenu">
+        INSERT
+          INTO TBL_ORDER_MENU
+        (
+          ORDER_CODE
+        , MENU_CODE
+        , ORDER_AMOUNT
+        )
+        VALUES
+        (
+          #{orderCode}
+        , #{menuCode}
+        , #{orderAmount}
+        )
+    </insert>
 </mapper>
