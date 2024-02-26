@@ -2,7 +2,7 @@ package com.ohgiraffers.section01.problem;
 
 public class MenuAndCategory {
     // 메뉴를 보고 싶은데 카테고리도 가진 메뉴
-    // 메뉴 여러 개가 카테고리 한 개랑 매핑 됨 -> N:1 관계
+    // 메뉴 여러 개가 카테고리 한 개랑 매핑 됨 -> N:1
 
     private int menuCode;
     private String menuName;
