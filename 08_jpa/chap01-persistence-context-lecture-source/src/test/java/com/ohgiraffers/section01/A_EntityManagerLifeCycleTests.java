@@ -23,10 +23,22 @@ public class A_EntityManagerLifeCycleTests {
     }
 
     @Test
-    public void 엔티티_매니저_팩토리와_엔티티_매니저_생명주기_확인() {
+    public void 엔티티_매니저_팩토리와_엔티티_매니저_생명주기_확인1() {
         System.out.println("entityManagerFactory.hashCode: " + entityManagerFactory.hashCode());
         System.out.println("entityManager.hashCode: " + entityManager.hashCode());
     }
+
+    @Test
+    public void 엔티티_매니저_팩토리와_엔티티_매니저_생명주기_확인2() {
+        System.out.println("entityManagerFactory.hashCode: " + entityManagerFactory.hashCode());
+        System.out.println("entityManager.hashCode: " + entityManager.hashCode());
+    }
+
+    // 결과:
+    // entityManagerFactory.hashCode: 2007704254
+    // entityManager.hashCode: 1822651119
+    // entityManagerFactory.hashCode: 2007704254
+    // entityManager.hashCode: 1466066315
 
     @AfterAll
     public static void closeFactory() {

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.2">
+
+    <!-- 설명. 엔티티 매니저 팩토리를 식별하기 위한 이름 설정 -->
+    <persistence-unit name="jpatest">
+        <class>com.ohgiraffers.section01.entity.Member</class>
+<!--        mapper 등록이랑 비슷한 개념 - 등록한 거 엔티티니까 신경을 쓰라는 뜻 -->
+        <properties>
+
+            <!-- 데이터베이스 연결 정보 -->
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/menudb"/>
+            <property name="jakarta.persistence.jdbc.user" value="swcamp"/>
+            <property name="jakarta.persistence.jdbc.password" value="swcamp"/>
+
+            <!-- 설명. hibernate 설정(실행되는 sql 구문을 format 형태로 보여주기) -->
+            <property name="hibernate.show_sql" value="true"/>    <!-- 보여달라는 뜻 -->
+            <property name="hibernate.format_sql" value="true"/>  <!-- 개행 처리해서 예쁘게 보여달라는 뜻 -->
+
+            <!-- 설명. DML 구문 수행 시 자동으로 스키마 생성(테이블 생성)을 위한 설정 추가 -->
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <!-- ddl 구문이 자동으로 날아가게 만든다는 뜻 create이기 때문에 기존에 있던 테이블을 밀고 항상 새로 만들어줌 -->
+        </properties>
+    </persistence-unit>
+</persistence>
