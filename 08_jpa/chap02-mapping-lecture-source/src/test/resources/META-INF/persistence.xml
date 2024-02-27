@@ -4,7 +4,14 @@
     <!-- 설명. 엔티티 매니저 팩토리를 식별하기 위한 이름 설정 -->
     <persistence-unit name="jpatest">
         <class>com.ohgiraffers.section01.entity.Member</class>
+        <class>com.ohgiraffers.section02.column.Member</class>
+        <class>com.ohgiraffers.section03.primarykey.subsection01.identity.Member</class>
+        <class>com.ohgiraffers.section03.primarykey.subsection02.table.Member</class>
+        <class>com.ohgiraffers.section04.enumtype.Member</class>
+        <class>com.ohgiraffers.section05.compositekey.subsection01.embedded.Member</class>
+        <class>com.ohgiraffers.section05.compositekey.subsection02.idclass.Member</class>
 <!--        mapper 등록이랑 비슷한 개념 - 등록한 거 엔티티니까 신경을 쓰라는 뜻 -->
+<!--        켜자마자 이 설정을 읽고 관리해야 할 엔티티를 본 다음 바로 테이블을 만들어줌-->
         <properties>
 
             <!-- 데이터베이스 연결 정보 -->
