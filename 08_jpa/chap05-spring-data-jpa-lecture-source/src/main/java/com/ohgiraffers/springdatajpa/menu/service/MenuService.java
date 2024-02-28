@@ -1,10 +1,15 @@
 package com.ohgiraffers.springdatajpa.menu.service;
 
+import com.ohgiraffers.springdatajpa.menu.dto.CategoryDTO;
 import com.ohgiraffers.springdatajpa.menu.dto.MenuDTO;
+import com.ohgiraffers.springdatajpa.menu.entity.Category;
 import com.ohgiraffers.springdatajpa.menu.entity.Menu;
 import com.ohgiraffers.springdatajpa.menu.repository.CategoryRepository;
 import com.ohgiraffers.springdatajpa.menu.repository.MenuRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +18,7 @@ import java.util.stream.Collectors;
 
 /* 설명.
  *  Service 계층: 비즈니스 로직, 트랜잭션 처리(@Transactional), DTO <-> Entity(modelmapper lib 활용)
-* */
+ * */
 @Service
 public class MenuService {
 
@@ -55,8 +60,8 @@ public class MenuService {
     public List<MenuDTO> findMenuList() {
 
         List<Menu> menuList = menuRepository.findAll(Sort.by("menuCode").descending());
-                                                                                // ascending, descending 해줄 수 있음
-                                                    // 이런 식으로 정렬 가능
+        // ascending, descending 해줄 수 있음
+        // 이런 식으로 정렬 가능
         // menu 엔티티 하나씩 꺼낸 다음 람다식을 이용해서 menu를 MenuDTO로 하나씩 바꿔줌
         // entity -> DTO, Menu -> MenuDTO 끼리 한 다음에 List로 바꿔줌
         // 즉 이것이 List<MenuDTO>가 되는 것
@@ -65,7 +70,44 @@ public class MenuService {
 
     }
 
+    /* 설명. 3. findAll(페이징 처리 후) */
+    public Page<MenuDTO> findMenuList(Pageable pageable) {
+
+        /* 설명.
+         *  1. 넘어온 pageable에 담긴 페이지 번호를 인덱스 개념으로 바꿔서 인지시킴
+         *  2. 한 페이지에 뿌려질 데이터 크기
+         *  3. 정렬 기중
+        * */
+
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+                                  // 삼항 연산자가 하는 일 = 인덱스 체계로 바꾸는 것, 음수 또는 0이 되면 0으로
+                                  pageable.getPageSize(),
+                                  Sort.by("menuCode").descending());
+
+        Page<Menu> menuList = menuRepository.findAll(pageable);
+        // 그 페이지에 맞는 게시물 10개를 뽑아서 줌
+
+        return menuList.map(menu -> mapper.map(menu, MenuDTO.class));
+
+    }
 
 
+    /* 설명. 4. 메뉴 가격으로 조회 */
+    public List<MenuDTO> findMenuPrice(int menuPrice) {
 
+        /* 설명. 전달 받은 가격을 초과하는 메뉴의 목록을 조회하는 메소드 */
+        List<Menu> menuList = menuRepository.findByMenuPriceGreaterThan(menuPrice);
+        // 이런 식으로 메소드 이름 잘 지으면 쿼리 자동으로 생성해줌
+        // 다중행이라 List
+
+        return menuList.stream().map(menu -> mapper.map(menu, MenuDTO.class)).collect(Collectors.toList());
+
+    }
+
+    public List<CategoryDTO> findAllCategory() {
+
+        List<Category> categoryList = categoryRepository.findAllCategory();
+
+        return categoryList.stream().map(category -> mapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
+    }
 }
