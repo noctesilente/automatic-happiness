@@ -15,6 +15,9 @@
         <th>판매상태</th>
     </tr>
     <tr th:each="menu : ${ menuList }">
+<!--        tr 태그 -> 메뉴를 하나씩 꺼내서 이 전체 식을 여러 번 반복한다고 보면 됨-->
+<!--        이게 반복될 때마다 위에 tr 태그가 하나씩 추가 됨 -> 이건 나중에 참고해도 됨-->
+<!--        map으로 던지면 객체가 넘어온다고 생각, list가 넘어오면 배열이 넘어온다고 생각-->
         <td th:text="${ menu.menuCode }"></td>
         <td th:text="${ menu.menuName }"></td>
         <td th:text="${ menu.menuPrice }"></td>
