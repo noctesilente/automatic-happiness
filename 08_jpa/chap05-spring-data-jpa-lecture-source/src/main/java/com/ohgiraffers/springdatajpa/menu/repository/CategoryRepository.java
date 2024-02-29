@@ -15,5 +15,7 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
             "ORDER BY CATEGORY_CODE ASC", nativeQuery = true)
     // 쿼리 메소드로 감당이 안 되면 이렇게 쓸 수 있음
     // jpa로 감당 안 되는 걸 어쩔 수 없으니 native query 를 쓸 수 있음
+    // 안 써도 작동은 되지만 이렇게도 쓸 수 있다는 걸 보여준 예시 -> 컨벤션을 못 지키고 쓰는 거라 긴 쿼리문을 쓸 때는 mybatis를 쓰는 게 낫다는 의견도 있음
+    // 대신 주석 처리하고 쓰는 게 아니라 findAll -> 부모에서 지원해주는 메소드 쓰고 여기에 굳이 안 써도 됨!
     List<Category> findAllCategory();
 }

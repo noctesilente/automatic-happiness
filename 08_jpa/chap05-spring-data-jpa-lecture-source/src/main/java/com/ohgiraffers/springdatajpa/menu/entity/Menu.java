@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter       // 원래는 엔티티에 세터 안 쓰는데... 오류 떠서 어쩔 수 없이 추가
 @ToString
 //@Data       // 다 만들어주지만 내부적으로 다 만들어주기 때문에 매우 비효율적 -> 이거 쓰는 거 지양하기
 public class Menu {

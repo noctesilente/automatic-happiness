@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public class MenuService {
     }
 
 
-    /* 설명. 1. findById 예제 */
+    /* 설명. 1. findById 예제 - 7번 메뉴 목록 보기 */
     // 조회를 한 거기 때문에 커밋, 롤백을 할 필요기 없기 때문에 @Transactional를 쓸 필요가 없음
     public MenuDTO findMenuByCode(int menuCode) {
         // JPaRepository가 물려준 메소드 -> 반환형이 optional임 -> 제네릭으로 걸었던 타입으로 다시 돌려줌
@@ -56,7 +57,7 @@ public class MenuService {
         return mapper.map(menu, MenuDTO.class);
     }
 
-    /* 설명. 2. findAll(페이징 처리 전) */
+    /* 설명. 2. 메뉴 전체 목록 보기 - findAll(페이징 처리 전) */
     public List<MenuDTO> findMenuList() {
 
         List<Menu> menuList = menuRepository.findAll(Sort.by("menuCode").descending());
@@ -70,13 +71,13 @@ public class MenuService {
 
     }
 
-    /* 설명. 3. findAll(페이징 처리 후) */
+    /* 설명. 3. 메뉴 전체 목록 보기 - findAll(페이징 처리 후) */
     public Page<MenuDTO> findMenuList(Pageable pageable) {
 
         /* 설명.
          *  1. 넘어온 pageable에 담긴 페이지 번호를 인덱스 개념으로 바꿔서 인지시킴
          *  2. 한 페이지에 뿌려질 데이터 크기
-         *  3. 정렬 기중
+         *  3. 정렬 기준
         * */
 
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
@@ -92,22 +93,52 @@ public class MenuService {
     }
 
 
-    /* 설명. 4. 메뉴 가격으로 조회 */
+    /* 설명. 4. 메뉴 가격으로 조회 - 입력 가격을 초과하는 메뉴의 목록 조회 */
     public List<MenuDTO> findMenuPrice(int menuPrice) {
 
         /* 설명. 전달 받은 가격을 초과하는 메뉴의 목록을 조회하는 메소드 */
         List<Menu> menuList = menuRepository.findByMenuPriceGreaterThan(menuPrice);
-        // 이런 식으로 메소드 이름 잘 지으면 쿼리 자동으로 생성해줌
+        // 이런 식으로 메소드 이름 잘 지으면 쿼리 자동으로 생성해줌 -> findById 같은 건 자체적으로 있는 거라 굳이 Repository에 선언 X -> 이미 부모 클래스에 있음
+        // 이건 자식 클래스가 추가 구현한 거라서 Repository에 들어감
         // 다중행이라 List
 
         return menuList.stream().map(menu -> mapper.map(menu, MenuDTO.class)).collect(Collectors.toList());
 
     }
 
+    /* 설명. 5. 카테고리 고를 수 있게 출력 */
     public List<CategoryDTO> findAllCategory() {
 
         List<Category> categoryList = categoryRepository.findAllCategory();
 
         return categoryList.stream().map(category -> mapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
+    }
+
+    /* 설명. 6. INSERT */
+    @Transactional      // DML 작업
+    public void registMenu(MenuDTO newMenu) {
+        menuRepository.save(mapper.map(newMenu, Menu.class));
+
+    }
+
+    /* 설명. 7. UPDATE */
+    @Transactional
+    public void modifyMenu(MenuDTO modifyMenu) {
+
+        // 수정할 거 가져오기 - PK 값으로 가져오고 없으면 예외 발생시키기
+        Menu foundMenu = menuRepository.findById(modifyMenu.getMenuCode()).orElseThrow(IllegalAccessError::new);
+
+        foundMenu.setMenuName(modifyMenu.getMenuName());
+        // 업데이트가 작성됨
+
+    }
+
+    /* 설명. 8. DELETE */
+    @Transactional
+    public void deleteMenu(int menuCode) {
+
+        menuRepository.deleteById(menuCode);
+        // repository 가 알고 있는 제네릭의 pk 와 같은 타입이면 pk로 인지하고 지워줌
+        // extends 하고 썼던 제네릭
     }
 }

@@ -4,7 +4,6 @@ import com.ohgiraffers.springdatajpa.common.Pagination;
 import com.ohgiraffers.springdatajpa.common.PagingButtonInfo;
 import com.ohgiraffers.springdatajpa.menu.dto.CategoryDTO;
 import com.ohgiraffers.springdatajpa.menu.dto.MenuDTO;
-import com.ohgiraffers.springdatajpa.menu.entity.Menu;
 import com.ohgiraffers.springdatajpa.menu.service.MenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -43,8 +42,10 @@ public class MenuController {
     }
 
 
+    /* 설명. 1. 7번 메뉴 목록 보기 */
     @GetMapping("/{menuCode}")          // path valuable 방식 - 경로 상에 있는 걸 변수로 받아내는 방식
-    public String findMenuByCode(@PathVariable int menuCode, Model model) {
+    // 링크가 http://localhost:8888/menu/7 로 뜸
+    public String findMenuByCode(@PathVariable int menuCode, Model model)  {
 //       logger.info("menuCode: {}", menuCode);       // 두번째에 있는 매개변수가 왼쪽 중괄호에 들어감
         // 결과: 2024-02-28T09:41:26.336+09:00  INFO 32708 --- [nio-8888-exec-1] c.o.s.menu.controller.MenuController     : menuCode: 7
         // 이렇게 뜸
@@ -59,7 +60,7 @@ public class MenuController {
     }
 
 
-    /* 설명. 2. 페이징 처리 전 */
+    /* 설명. 2. 메뉴 전체 목록 보기 - 페이징 처리 전 */
 //    @GetMapping("/list")
 //    public String findMenuList(Model model) {
 //
@@ -70,7 +71,7 @@ public class MenuController {
 //        return "menu/list";
 //    }
 
-    /* 설명. 3. 페이징 처리 후 */
+    /* 설명. 3. 메뉴 전체 목록 보기 - 페이징 처리 후 */
     @GetMapping("/list")
     public String findMenuList(@PageableDefault Pageable pageable, Model model) {
         log.info("pageable: {}", pageable);
@@ -112,7 +113,7 @@ public class MenuController {
     }
 
 
-    /* 설명. 4. 메뉴 가격으로 조회 */
+    /* 설명. 4. 메뉴 가격으로 조회 - 입력 가격을 초과하는 메뉴의 목록 조회 */
     @GetMapping("/querymethod")
     public void queryMethodPage() {
     }
@@ -129,7 +130,7 @@ public class MenuController {
     }
 
 
-    /* 설명. 5.  */
+    /* 설명. 5. 카테고리 고를 수 있게 출력 */
     @GetMapping("/regist")
     public void registPage() {
     }
@@ -142,12 +143,47 @@ public class MenuController {
      *  @ResponseBody가 붙었을 때 기존과 다른 핸들러 메소드의 차이점
      *  1. 핸들러 메소드의 반환형이 어떤 것이라도 상관없다. (-> 모두 json 문자열 형태로 요청이 들어온 곳으로 반환된다.)
      *  2. 한글이 포함된 데이터는 produces 속성에 'application/json'라는 MIME 타입과 'charset=UTF-8' 인코딩 타입을 붙여준다.
-    * */
+     * */
     @ResponseBody
     public List<CategoryDTO> findCategoryList() {
 //        @ResponseBody - 요청이 들어온 애한테 문자열을 준다는 개념 - 뷰를 고른다는 개념 X 뷰 리졸버 동작 X
 
         return menuService.findAllCategory();
+    }
 
+
+    /* 설명. 6. INSERT */
+    /* 설명. Spring Data JPA로 DML 작업하기(Insert, Update, Delete) */
+    @PostMapping("/regist")
+    public String registMenu(MenuDTO newMenu) {
+        menuService.registMenu(newMenu);
+
+        return "redirect:/menu/list";
+    }
+
+
+    /* 설명. 7. UPDATE */
+    @GetMapping("/modify")
+    public void modifyPage() {
+    }
+
+    @PostMapping("/modify")
+    public String modifyMenu(MenuDTO modifyMenu) {
+        menuService.modifyMenu(modifyMenu);
+
+        return "redirect:/menu/" + modifyMenu.getMenuCode();
+    }
+
+
+    /* 설명. 8. DELETE */
+    @GetMapping("/delete")
+    public void deletePage() {}
+
+    @PostMapping("/delete")
+    public String deleteMenu(@RequestParam int menuCode) {
+        menuService.deleteMenu(menuCode);
+
+        // 삭제된 걸 볼 순 없으니까 전체 메뉴를 봐서 삭제됐는지 확인
+        return "redirect:/menu/list";
     }
 }
