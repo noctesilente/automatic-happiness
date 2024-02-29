@@ -94,6 +94,7 @@ public class MenuService {
 
 
     /* 설명. 4. 메뉴 가격으로 조회 - 입력 가격을 초과하는 메뉴의 목록 조회 */
+    /* 설명. 4. QueryMethod */
     public List<MenuDTO> findMenuPrice(int menuPrice) {
 
         /* 설명. 전달 받은 가격을 초과하는 메뉴의 목록을 조회하는 메소드 */
@@ -107,6 +108,7 @@ public class MenuService {
     }
 
     /* 설명. 5. 카테고리 고를 수 있게 출력 */
+    /* 설명. 5. JPQL or native query */
     public List<CategoryDTO> findAllCategory() {
 
         List<Category> categoryList = categoryRepository.findAllCategory();
@@ -115,6 +117,7 @@ public class MenuService {
     }
 
     /* 설명. 6. INSERT */
+    /* 설명. 6. 추가하기 - save */
     @Transactional      // DML 작업
     public void registMenu(MenuDTO newMenu) {
         menuRepository.save(mapper.map(newMenu, Menu.class));
@@ -122,6 +125,7 @@ public class MenuService {
     }
 
     /* 설명. 7. UPDATE */
+    /* 설명. 7. 수정하기 - 엔티티 조회 후 객체의 값 변경 */
     @Transactional
     public void modifyMenu(MenuDTO modifyMenu) {
 
@@ -134,6 +138,7 @@ public class MenuService {
     }
 
     /* 설명. 8. DELETE */
+    /* 설명. 8. 삭제하기 - delete */
     @Transactional
     public void deleteMenu(int menuCode) {
 
