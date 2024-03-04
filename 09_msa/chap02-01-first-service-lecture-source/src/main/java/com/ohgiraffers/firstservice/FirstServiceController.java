@@ -1,4 +1,4 @@
-package org.teamone.firstservice;
+package com.ohgiraffers.firstservice;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
