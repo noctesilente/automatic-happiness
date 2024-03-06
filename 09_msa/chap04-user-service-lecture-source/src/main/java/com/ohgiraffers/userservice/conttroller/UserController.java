@@ -64,6 +64,11 @@ public class UserController {
     public ResponseEntity<ResponseUser> registUser(@RequestBody RequestUser user) {
         // 성공한 회원에 대한 정보를 화면에 뿌려지도록 작성할 것 - 이번에는
 
+        // yml 파일 숨겨놓는 과정에서 증명을 위해 추가
+        /* 설명. config server에서 제공하는 test.message 값 확인 */
+        System.out.println("config sever의 설정값 확인: " + env.getProperty("test.message"));
+
+
         /* 설명. RequestUser -> UserDTO */
         // modelmapper를 통해 requestuser를 userdto로 바꾸고 싶은 것
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);

@@ -15,5 +15,5 @@ public class ResponseUser {
     // 화면에 뿌릴 값
 
     /* 설명. FeignClient 이후(다른 도메인 서버와 통신해서 값을 가져온 이후) */
-//    private List<ResponseOrder> orders;
+    private List<ResponseOrder> orders;
 }

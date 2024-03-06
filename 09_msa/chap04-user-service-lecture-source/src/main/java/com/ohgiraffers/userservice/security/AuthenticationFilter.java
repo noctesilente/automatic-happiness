@@ -74,13 +74,16 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
         try {
-            RequestLogin requestLogin = new ObjectMapper().readValue(request.getInputStream(), RequestLogin.class);
+            RequestLogin requestLogin =
+                    new ObjectMapper().readValue(request.getInputStream(), RequestLogin.class);
 
             return getAuthenticationManager().authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            requestLogin.getEmail(), requestLogin.getPassword(), new ArrayList<>())
+                            requestLogin.getEmail(), requestLogin.getPassword(), new ArrayList<>()
+                    )
             );
         } catch (IOException e) {
+
             throw new RuntimeException(e);
         }
         // RequestLogin = 우리가 만들어야 되는 VO 타입

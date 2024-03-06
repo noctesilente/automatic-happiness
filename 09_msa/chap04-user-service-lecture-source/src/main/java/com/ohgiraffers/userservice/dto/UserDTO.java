@@ -1,6 +1,9 @@
 package com.ohgiraffers.userservice.dto;
 
+import com.ohgiraffers.userservice.vo.ResponseOrder;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class UserDTO {
@@ -11,5 +14,9 @@ public class UserDTO {
 
     private java.util.Date enrollDate;
     private String userId;
+
+    /* 설명. FeignClient 이후 */
+    // 주문 내역도 같이 실어서 보내주겠다는 것
+    private List<ResponseOrder> orders;
 
 }

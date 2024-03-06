@@ -56,6 +56,14 @@ spring:
         - id: user-service
           uri: lb://SWCAMP-USER-SERVICE
           predicates:
+            - Path=/user-service/actuator/**
+            - Method=POST
+          filters:
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+
+        - id: user-service
+          uri: lb://SWCAMP-USER-SERVICE
+          predicates:
             - Path=/user-service/**
             - Method=GET
           filters:
@@ -77,6 +85,14 @@ spring:
             - Method=POST
           filters:
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+
+        # 주문 관련 도메인(마이크로 서비스) 서버 추가 후
+        - id: order-service
+          uri: lb://SWCAMP-ORDER-SERVICE
+          predicates:
+            - Path=/order-service/**
+          filters:
+            - RewritePath=/order-service/(?<segment>.*), /$\{segment}
 
 token:
   secret: l1Z5I9WufSD5qM0UTHXDJa1kaGxBlyhKMbx+ONkqzeRTlKdF8Bq37mA3Z8nhjRlwVUrL/u3bdkFeamIrUoWvVw==
