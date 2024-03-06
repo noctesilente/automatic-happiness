@@ -89,5 +89,14 @@ public class UserController {
 
     }
 
+    @GetMapping("/users/{id}")
+    public ResponseEntity<ResponseUser> getUser(@PathVariable("id") String id) {
+        // 조회
+        UserDTO userDTO = userService.getUserById(id);
 
+        // 조회한 다음에 VO에 넣기
+        ResponseUser returnValue = modelMapper.map(userDTO, ResponseUser.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+    }
 }
