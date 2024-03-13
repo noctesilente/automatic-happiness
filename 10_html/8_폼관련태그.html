@@ -129,8 +129,9 @@
         <label for="male">남자</label>
         <input type="radio" id="female" name="gender" value="F" checked>
         <label for="female">여자</label>
+        <!-- 실제로 넘어가는 값은 value -->
 
-        <h3>type="checkbox</h3>
+        <h3>type="checkbox"</h3>
         <label>취미: </label>
         <input type="checkbox" id="baseball" name="hobby" value="야구" checked>
         <label for="baseball">야구</label>
@@ -138,10 +139,89 @@
         <label for="baseketball">농구</label>
         <input type="checkbox" id="football" name="hobby" value="축구" checked>
         <label for="football">축구</label>
+        <!-- 배열로 넘어감 -->
 
         <input type="submit" value="전송">&nbsp;<input type="reset" value="취소">
 
     </form>
+
+    <form action="#" enctype="multipart/form-data">
+        <!-- enctype="multipart/form-data 이거 꼭 붙여줘야 함! -->
+        <h2>그 밖의 input 태그들</h2>
+        <h3>type="color"</h3>
+        <label>색상 선택: </label>
+        <input type="color" name="color">
+
+        <h3>type="file"</h3>
+        <label>파일 선택: </label>
+        <input type="file" name="upload file" multiple>
+        
+        <h3>type="hidden"</h3>
+        <label>안 보임: </label>
+        <input type="hidden" name="hidden value" value="1">
+        <!-- 서버에 넘겨야 되고 화면에 안 보여야 되는 게 있으면 유용 -->
+
+        <h3>type="button", type="submit", type="reset"</h3>
+        <input type="button" value="버튼">
+        <input type="submit" value="전송">
+        <input type="reset" value="초기화">
+
+        <button type="button">버튼 2</button>
+        <button type="submit">전송 2</button>       <!-- 버튼의 default가 submit이다 -->
+        <button type="reset">초기화 2</button>
+
+    </form>
+
+    <!--
+        select 태그와 option 태그
+        사용자가 내용을 입력하는 것이 아니고 여러 옵션 중에서 선택하게 하고 싶을 때 사용하는
+        드롭다운 목록이다.
+    -->
+    <form action="#">
+        <h2>select 태그와 option 태그</h2>
+        <h3>기본 select 태그와 option 태그</h3>
+        <label>국적: </label>
+        <select name="nation">
+            <!-- nation을 키로 백으로는 value를 넘김 -->
+            <option value="ko">한국</option>
+            <option value="ch">중국</option>
+            <option value="jp">일본</option>
+            <option value="etc" selected>기타</option>
+            <!-- selected = 미리 선택이 되어 있음 -->
+        </select>
+        <button>제출</button>
+
+        <h3>select 태그의 속성</h3>
+        <p>size: listbox의 크기를 지정한다. <br>
+            multiple: 다중 선택이 가능하다
+        </p>
+        <!-- select>option*4 -->
+        <select name="nation2" size="2" multiple>
+            <!-- 옵션만 줘도 스크롤을 자동 지원 -->
+            <option value="ko">한국</option>
+            <option value="ch">중국</option>
+            <option value="jp" selected>일본</option>
+            <option value="etc">기타</option>
+        </select>
+        <button>제출</button>
+
+    </form>
+
+    <!-- textarea 태그 -->
+    <h2>textarea 태그</h2>
+    <!-- 댓글 창 등으로 활용 가능 -->
+    <p>input type="text"와 비슷하지만 여러 줄을 입력할 수 있고 input 태그와 달리 <br>
+        (마우스로) 세로나 가로로 크기 조절이 가능하다. -> 고정(resize:none)도 가능
+        (css 속성인 resize로 크기 조절을 고정할 수도 있고 범위를 벗어나면 스크롤 바가 생긴다.) <br>
+        (추후 우리가 javascript를 통해 textarea에 있는 값을 다룰 때는 innerHTML/innerTEXT가 아닌
+        value라는 개념으로 들어있는 값을 다루게 된다.)
+    </p>
+    <form action="#">
+        <textarea name="textarea" cols="30" rows="10" style="resize:none">abc</textarea>
+        <button>전송</button>&nbsp;<button type="reset">초기화</button>
+    </form>
+
+
 
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
