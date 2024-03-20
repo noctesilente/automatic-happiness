@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>01. 이벤트 핸들러 어트리뷰트</h1>
+    <!-- 마우스 클릭, 커서 움직임 등등 모든 사용자와의 상호작용에 따라 어떤 기능이 동작해야 되는지 = 이벤트 핸들러 -->
+    <!-- 적용하는 방식 -> 3가지 지금은 기본적인 형태만 할 것 -->
+    <!-- 문법에 치중하지 말고 개념만 보기 -->
+
+    <!-- on이라는 말과 함께 발생시키는 이벤트를 쓰기 -->
+    <!-- "" 안은 클릭을 하면 실행될 자바스크립트 코드로 쓸 수 있음 -->
+    <button onclick="alert('Hello'); console.log('On Console')">Click</button>
+
+
+    <!-- 이런 식으로 할 수도 있음 -->
+    <div class="prop">
+        <button onclick="alert('Hello'); console.log('On Console')">Click</button>
+        <!-- 원래 window.alert인데 전역 객체는 생략이 가능해서 생략 -> 나중에 알려주신다고 하심  -->
+        <!-- 눌러서 실행되는 이벤트가 두 개 -> 이렇게 이벤트를 핸들링 하는 것을 이벤트 핸들러라고 함 -->
+        <button id="btn" onmouseover="hello('수강생');">마우스를 올려보세요</button>
+    </div>
+    <!-- 프로퍼티랑 어트리뷰트는 지금은 일치하는데 다른 경우도 있음
+    태그에 다는 걸 어트리뷰트라고 함
+    태그가 내부적으로 해석이 되면 객체가 되는데 객체에 있는 걸 프로퍼티라고 함
+    일반적으로는 이게 같거나 대응됨 -->
+
+    <h3>1. 이벤트 핸들러 어트리뷰트 방식</h3>
+    <p>
+        HTML 이벤트 핸들러 어트리뷰트(on 접두사 + 이벤트 타입) 값으로 함수 호출문을 할당하여 이벤트 핸들러를 등록하는 방식이다.
+        주의할 점은 함수 참조가 아닌 함수 호출문(소괄호까지 작성)을 할당한다는 것이다.
+    </p>
+    <script>
+        console.log(document.getElementsByClassName('prop'));
+
+        function hello(name) {
+            alert(`${name}씨, 마우스 올리지 마세요!`);
+        }
+    </script>
+</body>
+</html>

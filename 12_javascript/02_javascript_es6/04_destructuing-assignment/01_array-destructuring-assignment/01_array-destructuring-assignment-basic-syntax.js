@@ -6,7 +6,7 @@ let nameArr = ["Gildong", "hong"];
 // console.log(firstName, ' ', lastName);
 
 // -> 이런 식으로 해줄 수 있음
-let [firstName, lastName] = nameArr;
+let [firstName, lastName] = nameArr; 
 console.log(firstName, lastName);
 // Gildong hong
 

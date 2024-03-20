@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>2. 이벤트 핸들러 프로퍼티 방식</h1>
+    <p>
+        DOM 노드 객체는 이벤트에 대응하는 이벤트 핸들러 프로퍼티를 가지고 있다.
+        이벤트 핸들러 어트리뷰트 방식과 차이점은 프로퍼티 방식은 하나의 이벤트 핸들러만 바인딩 할 수 있다.
+        <!-- 바인딩 -> 함수가 이벤트에 묶인 셈이니까 바인딩 -->
+        그리고 호출을 우리가 따로 할 필요가 없다.
+
+        <!-- 실행해야 되는 구문이 두 개여도 사용 가능하긴 함 -->
+        <!-- 함수 안에서 내부적으로 호출하면 됨 - 함수는 하나밖에 등록이 안 되지만 함수를 두 개 쓸 수 있는 것 -> test1, test2 -->
+    </p>
+    <button id="btn">클릭해 보세요.</button>
+    <script>
+        const $button = document.getElementById("btn");
+
+        // 모든 DOM 요소는 프로퍼티가 있는데 빈 값으로 되어 있음
+        // 거기에 함수를 대체시키면 함수를 호출하는 게 아니라 함수를 등록하면
+        // 알아서 버튼을 클릭했을 때 이 함수가 호출이 됨
+        $button.onclick = function (){
+            alert('DOM 프로퍼티 방식으로 이벤트 핸들러 등록 완료!');
+            test1();
+            test2();
+        }
+
+        // 이게 뒤에 쓴 거니까 덮어씌워짐
+        $button.onclick = () => alert('DOM 프로퍼티 방식으로 화살표 함수 등록!');
+
+        function test1() {
+
+        }
+
+        function test2() {
+
+        }
+    </script>
+</body>
+</html>
