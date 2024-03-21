@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="step01">
+        <h5>다중 속성 바인딩</h5>
+        <!-- 반응형 변수(객체가 담긴)를 활용해 한 번에 다양한 attribute를 세팅할 수 있다. -->
+        <div v-bind="multiAttr">{{multiAttr.value}}</div>
+        <button @click = "fun">ref에 담긴 객체 접근</button>
+    </div>
+
+    <script>
+        const {createApp, ref, reactive} = Vue;
+
+        /*
+            ref를 쓸 때는 템플릿 영역이 아닌 곳에서는 .value를 붙여야 데이터에 접근이 가능하지만 템플릿 영역에서는
+            안 붙여도 된다.
+            반면 reactive는 템플릿 영역이든 아니든 바로 접근이 가능하지만 객체 형태만 관리가 가능하다.
+        */
+        createApp({
+            setup() {
+                const multiAttr = ref({
+                    // ref/reactive 차이 + .value 붙이기 -> 언제?
+                    // 객체인데 ref에 담겨 있으면 바로 꺼내 쓸 수 있어서 .value 안 붙여도 됨
+
+                    // 객체를 받는 것 ref, reactive 두 개가 있음 일단 reactive를 추천하심
+                    // 객체를 관리하고 재료로 던질 수 있음 
+                    // 그것을 쓸 때 템플릿 영역에서 쓸 때는 아무런 상관이 없음!! (div 안에서)
+                    // ref일 때 템플릿 영역이 아닌 곳에서는 .value를 붙여야 함 밑이 그래서 써준 것
+                    // reactive로 하면 밑에도 .value를 안 붙여도 됨
+
+                    // 꼭 객체만이 아니라 ref로 하면 그 안의 것을 꺼내려면 .value를 붙여야 함
+                    // 템플릿 영역에서는 안 붙여도 되는데 여기서는 붙여야 함
+
+                    // ref로 객체를 붙였을 때는 템플릿 영역이 아닌 곳에서는 .value를 붙여야 되는 것!
+                    id: "multiId",
+                    class: "multiClass",
+                    value: "multiValue"
+                });
+
+                const fun = () => {
+                    console.log(multiAttr.value);
+                }
+
+                return {
+                    multiAttr,
+                    fun
+                }
+            }
+        }).mount('#step01');
+
+    </script>
+</body>
+</html>

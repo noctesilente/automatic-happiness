@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        /* promise를 더 쉽게 사용할 수 있게 async/await가 ES8(2017)에서 추가되었다. */
+
+        function increase(number) {
+            const promise = new Promise((resolve, reject) => {
+
+                setTimeout(() => {
+                    const result = number + 10;
+
+                    if(result > 50) {
+                        const e = new Error('NumberTooBig');
+
+                        return reject(e);
+                    }
+
+                    return resolve(result);
+                }, 1000);
+            })
+            return promise;
+        }   
+
+        /* 
+            await의 두 가지 기능
+            1. await가 달린 함수의 결과인 promise에 담긴 결과(promise 내부의 resolve에 담긴 성공결과)를 반환한다. (then과 비슷)
+            2. await가 달린 비동기 처리들은 그들 간에는 동기식으로 동작하게 된다.
+            (await를 쓰기 위해서 함수에 async를 달면 그 async 함수는 promise를 반환한다.)
+        */
+        async function run() {
+            let result = await increase(0);
+            console.log(result);
+            // promise 객체가 나올 것
+            // 이걸 실행하려면 이 함수를 실행해야 됨
+
+            // await 안 붙이면 promise임
+            result = await increase(result);
+            console.log(result);
+
+            // await = 프로미스를 반환하는 함수에서 리졸브에 던져진 성공결과를 뽑아낸다는 뜻과
+            // 다른 비동기 통신을 기다린다는 뜻, 두 가지가 있음
+
+            result = await increase(result);
+            console.log(result);
+
+            result = await increase(result);
+            console.log(result);
+
+            result = await increase(result);
+            console.log(result);
+            // console.log('end');
+
+            return 1;
+
+        }
+
+        console.log('반환값: ', run());
+        // async 함수기 때문에 반환값이 promise가 뜸
+
+
+        run().then(result => console.log(result));
+        // 하면 1이 뜸
+
+        // run();
+    </script>
+</body>
+</html>

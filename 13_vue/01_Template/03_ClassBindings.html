@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        .static {
+            width: 150px;
+            height: 100px;
+        }
+
+        .active:hover {
+            background-color: red;
+        }
+
+        .error {
+            text-decoration: underline;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="step01">
+        <!-- isActive와 isSize라는 반응형 변수를 조절해 클래스명을 부여 또는 회수할 수 있다. -->
+        <div :class="{active: isActive, static:isSize}">{{isSize}}</div>
+    </div>
+
+    <div id="step02">
+        <!-- 이런 div 부분을 템플릿, data를 모델이라고 부름 -->
+        <div :class="classObj">{{classObj}}</div>
+        <input type="text" v-model="classObj.active">
+    </div>
+
+    <script>
+        const {createApp, ref, reactive} = Vue;
+
+        createApp({
+            setup() {
+                const isActive = ref(true);
+                const isSize = ref(true);
+
+                return {
+                    isActive,
+                    isSize
+                }
+            }
+        }).mount('#step01');
+
+
+        /* composition api(컴포지션 api)는 view 인스턴스를 반환하며 View Model에 해당된다. */
+        createApp({
+            setup() {
+                const isActive = ref(true);
+                const isSize = ref(true);
+
+                // step01에 있는 걸 이런 식으로 여기에 넣은 것
+                const classObj = reactive ({
+                    active: isActive,
+                    static: isSize
+                })
+
+                // 관리할 대상이 객체면 reactive 사용
+                return {
+                    classObj
+                }
+            }
+
+        }).mount('#step02');
+    </script>
+</body>
+</html>

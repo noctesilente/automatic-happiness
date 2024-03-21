@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 콜백 지옥은 피하면서 비동기 통신을 순서대로 하기 위해 쓰는 것이 promise
+        function increase(number) {
+            const promise = new Promise((resolve, reject) => {
+
+                setTimeout(() => {
+                    const result = number + 10;
+
+                    if(result > 50) {
+                        const e = new Error('NumberTooBig');
+
+                        return reject(e);
+                    }
+
+                    return resolve(result);
+                }, 1000);
+            })
+            return promise;
+        }   
+
+        console.log(increase(0));
+
+        // increase(0).then(number => console.log(number));
+
+        increase(0)
+        .then(number => {
+            // 위 number에 10이 들어감
+            console.log(number);
+
+            return increase(number);
+        })
+        .then(number => {
+            // 위에 20이 들어감
+            console.log(number);
+
+            return increase(number);
+        })
+        .then(number => {
+            console.log(number);
+            return increase(number);
+        })
+        .then(number => {
+            console.log(number);
+            return increase(number);
+        })
+        .then(number => {
+            console.log(number);
+            console.log('end');
+        })
+    </script>
+</body>
+</html>
