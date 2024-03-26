@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="emojiName">
+        <button @click="setImgUrl">이모지 커몬!</button><br>
+        <img :src="imgUrl"/>
+    </div>
+
+    <script>
+        const {createApp, ref} = Vue;
+
+        createApp({
+            setup() {
+                const imgUrl = ref('');
+                const emojiName = ref('100');
+                function setImgUrl() {
+                    axios.get('https://api.github.com/emojis')
+                    .then(res => {
+                        console.log(emojiName);
+                        imgUrl.value = res.data[emojiName.value];
+                    })
+                }
+
+                return {
+                    emojiName,
+                    imgUrl,
+                    setImgUrl
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

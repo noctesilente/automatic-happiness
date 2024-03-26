@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Life Wines with Vue 3 Composition API</title>
+    <style>
+        .rootContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .appContainer {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            border: 1px dotted black;
+            width: 80%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .wine-card {
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            height: 300px;
+            border: 1px solid black;
+            justify-content: center;
+            align-items: center;
+            margin: 5px;
+        }
+
+        .image {
+            width: 70px;
+            height: 100px;
+        }
+
+        .btn-group {
+            display: flex;
+            width: 60%;
+            justify-content: space-around;
+        }
+
+        .btn {
+            width: 50px;
+            height: 50px;
+        }
+
+        .neon {
+            color: #fff;
+            text-shadow: 0 0 10px #00f, 0 0 20px #00f, 0 0 30px #00f, 0 0 40px #00f, 0 0 70px #00f, 0 0 80px #00f, 0 0 100px #00f, 0 0 150px #00f;
+            animation: neonAnimation 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonAnimation {
+            from {
+                text-shadow: 0 0 10px #00f, 0 0 20px #00f, 0 0 30px #00f, 0 0 40px #00f, 0 0 70px #00f, 0 0 80px #00f, 0 0 100px #00f, 0 0 150px #00f;
+            }
+
+            to {
+                text-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 15px #00f, 0 0 20px #00f, 0 0 35px #00f, 0 0 40px #00f, 0 0 50px #00f, 0 0 75px #00f;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="rootContainer">
+        <div v-if="loadingState">
+            로딩 중입니다...
+        </div>
+        <template v-else>
+            <h1 :class="{'neon': isMounted}">인생 와인</h1>
+
+            <div class="btn-group">
+                <button @click='goBack' class="btn">back</button>
+                <button @click="nextPage" class="btn">next</button>
+            </div>
+
+            <!-- 나중에 추가할 부분1 -->
+            <div v-if="likes.length">
+                <div>
+                    <p>내가 좋아하는 총 와인 id들: {{ likes }}</p>
+
+                    <!-- 나중에 추가할 부분2 -->
+                    <button @click="toggleViewingState">{{ viewingState ? '쇼핑하기': '쇼핑완료' }}</button>
+                </div>
+            </div>
+
+            <div class="appContainer">
+
+                <!-- 쇼핑하기 -->
+                <template v-if="!viewingState">
+                    <div class="wine-card" v-for="wine in pageWine" :key="wine.id">
+                        <p>{{ wine.wine }}</p>
+                        <img class="image" :src="wine.image" alt="wine image"/>
+
+                        <!-- 나중에 추가할 부분1 -->
+                        <!-- 페이징 처리가 끝나고 나면 쓸 버튼 -->
+                        <button v-if="!likes.includes(wine.id)" @click="likeWine(wine.id)">like</button>
+                        <button v-if="likes.includes(wine.id)" @click="hateWine(wine.id)">hate</button>
+                    </div>
+                </template>
+
+                <!-- 쇼핑완료 -->
+                <template v-else>
+
+                    <!-- 나중에 추가할 부분2 -->
+                    <div class="wine-card" v-for="wine in totalLikes" :key="wine.id">
+                        <p>{{ wine.wine }}</p>
+                        <img class="image" :src="wine.image" alt="wine image"/>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </div>
+    <script>
+        const {onMounted} = Vue;
+
+        createApp({
+            setup() {
+                onMounted(async () => {
+                    console.log('mount 이후 시점 실행');
+                });
+                return {
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

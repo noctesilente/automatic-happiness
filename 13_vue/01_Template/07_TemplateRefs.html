@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+    <body>
+        <div id="step01">
+            <label>name: </label><input type="text" ref="nameBox" v-model="name">
+            <!-- 사용자가 내용을 입력하면 input 태그의 이름이 바뀜 -->
+            <!-- 단방향으로 해야 된다면 v-bind의 대상이 value라는 attribute가 되어야 함 -->
+            <!-- 글을 쓰면 밑에서 const name 그게 바뀌고 그리고 다시 와서 입력한 이름 {{name}}에 새로 들어감 -->
+            <br>
+            <label>입력한 이름: {{name}}</label>
+        </div>
+
+        <script>
+            const {createApp, ref} = Vue;
+
+            createApp({
+                setup() {
+                    const name = ref('');
+                    return {
+                        name
+                    }
+                },
+
+                // $refs = ref 속성을 가진 걸 찾기
+                // .nameBox 이 이름을 가진 걸 찾기
+                // 위에 인풋 태그에서 선택하는 것
+                mounted() {
+                    console.log(this.$refs.nameBox);
+                    this.$refs.nameBox.focus();
+                }
+
+            }).mount('#step01');
+        </script>
+    </body>
+</html>
